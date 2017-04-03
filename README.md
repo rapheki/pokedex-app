@@ -1,28 +1,57 @@
 # PokedexApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+Display all the 721 Pokemons in a table. Clicking on a Pokemon gives additional details.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Run the app
 
-## Code scaffolding
+Clone the repo
+```
+$ git clone https://github.com/raphodn/pokedex-app.git
+$ cd pokedex-app
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+Install angular-cli
+```
+$ npm install -g angular-cli
+```
 
-## Build
+Install dependencies
+```
+$ npm install
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run the app
+```
+$ ng build && node server.js
+```
 
-## Running unit tests
+Open your browser
+```
+http://localhost:3000/
+```
+
+
+## Running unit tests (todo)
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+
+## Running end-to-end tests (todo)
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Built with
+
+- Angular 4
+- Node.JS
+- Bootstrap
+
+
+## Architecture
+
+- The data (pokedex, skills, types) is stored in `server/data`
+- The images (img, spr, thm) are stored in `public/images`
+- The Angular app loads the data on init, and displays it in a table

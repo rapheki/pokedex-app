@@ -1,0 +1,21 @@
+<table class="table table-bordered table-hover">
+
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>ID</th>
+      <th>English Name</th>
+      <th>Type(s)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let pokemon of pokemons">
+      <td><img src="/images/thm/{{pokemon.id}}{{pokemon.ename}}.png"></td>
+      <td>{{ pokemon.id }}</td>
+      <td>{{ pokemon.ename }}</td>
+      <td>{{ pokemon.type }}</td>
+    </tr>
+  </tbody>
+
+</table>
