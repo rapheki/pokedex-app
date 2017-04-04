@@ -1,0 +1,24 @@
+.pokemon-card {
+  border: 2px solid #616161;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  background-color: #fbfbfb;
+  cursor: pointer;
+}
+.pokemon-card:hover {
+  background-color:  #eeeeee;
+}
+
+.image-thm {
+  height: 50px; /* 100x100 */
+}
+
+.type-box {
+  border: 1px solid #e3350d;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+  white-space: nowrap;
+  background-color: #f3ae9e;
+}

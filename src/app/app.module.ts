@@ -5,13 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
-
 import { PokemonListService } from './pokemon-list.service';
+import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonListComponent
+    PokemonListComponent,
+    PokemonCardComponent
   ],
   imports: [
     BrowserModule,

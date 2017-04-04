@@ -1,0 +1,13 @@
+<div class="pokemon-card">
+  <div class="row">
+    <div class="col-xs-6">
+      <img class="img-responsive" src="/images/thm/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png">
+    </div>
+    <div class="col-xs-6">
+      <p>
+        <small>#{{pokemon.id}}</small><br>{{pokemon.ename}}
+      </p>
+      <p><span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span></p>
+    </div>
+  </div>
+</div>

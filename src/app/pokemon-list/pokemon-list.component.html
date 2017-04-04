@@ -2,24 +2,26 @@
   <i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
 
-<table *ngIf="!loadingData" class="table table-bordered table-hover">
+<section *ngIf="!loadingData">
 
-  <thead>
-    <tr>
-      <th>Image</th>
-      <th>ID</th>
-      <th>English Name</th>
-      <th>Type(s)</th>
-    </tr>
-  </thead>
+  <div class="row">
+    <div class="col-md-12">
+      Filters & Search
+    </div>
+  </div>
 
-  <tbody>
-    <tr *ngFor="let pokemon of pokemons">
-      <td><img class="img-responsive image-thm" src="/images/thm/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png"></td>
-      <td>{{pokemon.id}}</td>
-      <td>{{pokemon.ename}}</td>
-      <td><span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span></td>
-    </tr>
-  </tbody>
+  <br>
 
-</table>
+  <div class="row" *ngFor="let pokemon of pokemons;let idx = index">
+    <div class="col-md-4" *ngIf="idx%3===0 && pokemon">
+      <app-pokemon-card [pokemon]="pokemons[idx]"></app-pokemon-card>
+    </div>
+    <div class="col-md-4" *ngIf="idx%3===0 && pokemons[idx+1]">
+      <app-pokemon-card [pokemon]="pokemons[idx+1]"></app-pokemon-card>
+    </div>
+    <div class="col-md-4" *ngIf="idx%3===0 && pokemons[idx+2]">
+      <app-pokemon-card [pokemon]="pokemons[idx+2]"></app-pokemon-card>
+    </div>
+  </div>
+
+</section>
