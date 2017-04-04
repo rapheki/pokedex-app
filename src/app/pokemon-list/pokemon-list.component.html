@@ -20,42 +20,42 @@
     </div>
 
     <div class="col-md-4">
-      <h4>Filter</h4>
+      <h4>Filter <small>(Pokemon Type)</small></h4>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
+          <select class="form-control" [(ngModel)]="selectedFilterType" (ngModelChange)="filterPokemons($event)">
+            <option value="">All</option>
+            <option *ngFor="let f of pokemonTypes" [ngValue]="f">{{f.ename}}</option>
+          </select>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <h4>Search</h4>
+      <h4>Search <small>(Pokemon Name)</small></h4>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <input type="text" class="form-control" placeholder="Search by ename" [(ngModel)]="searchValue" (ngModelChange)="searchPokemons($event)">
+          <input type="text" class="form-control" placeholder="Search by English Name" [(ngModel)]="searchValue" (ngModelChange)="searchPokemons($event)">
         </div>
       </div>
     </div>
 
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      displaying {{pokemons.length}} Pokemon<span *ngIf="pokemons.length>1">s</span>
+    </div>
   </div>
 
   <hr>
 
   <div class="row">
     <div class="col-md-4" *ngFor="let pokemon of pokemons;let idx = index">
-      <app-pokemon-card [pokemon]="pokemon"></app-pokemon-card>
+      <app-pokemon-card [pokemon]="pokemon" (click)="pokemon.selected=!pokemon.selected"></app-pokemon-card>
     </div>
   </div>
-
-  <!-- <div class="row" *ngFor="let pokemon of pokemons | orderby: '-id';let idx = index">
-    <div class="col-md-4" *ngIf="idx%3===0 && pokemon">
-      <app-pokemon-card [pokemon]="pokemons[idx]"></app-pokemon-card>
-    </div>
-    <div class="col-md-4" *ngIf="idx%3===0 && pokemons[idx+1]">
-      <app-pokemon-card [pokemon]="pokemons[idx+1]"></app-pokemon-card>
-    </div>
-    <div class="col-md-4" *ngIf="idx%3===0 && pokemons[idx+2]">
-      <app-pokemon-card [pokemon]="pokemons[idx+2]"></app-pokemon-card>
-    </div>
-  </div> -->
 
 </section>

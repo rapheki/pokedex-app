@@ -1,13 +1,81 @@
 <div class="pokemon-card">
-  <div class="row">
-    <div class="col-xs-6">
-      <img class="img-responsive" src="/images/thm/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png">
+
+  <!-- Small Card (not selected) -->
+
+  <section *ngIf="!pokemon.selected">
+
+    <div class="row">
+      <div class="col-xs-6">
+        <img class="img-responsive" src="/images/thm/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png">
+      </div>
+      <div class="col-xs-6">
+        <p>
+          <small>#{{pokemon.id}}</small><br>{{pokemon.ename}}
+        </p>
+        <p>
+          <span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span>
+        </p>
+      </div>
     </div>
-    <div class="col-xs-6">
-      <p>
-        <small>#{{pokemon.id}}</small><br>{{pokemon.ename}}
-      </p>
-      <p><span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span></p>
+
+  </section>
+
+
+  <!-- Big Card (selected) -->
+
+  <section *ngIf="pokemon.selected">
+
+    <div class="row text-center">
+      <div class="col-xs-12">
+        <img class="img-responsive" src="/images/img/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png">
+      </div>
     </div>
-  </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-xs-6 text-center">
+            <img class="img-responsive" src="/images/spr/{{pokemon.id}}MS.png">
+          </div>
+          <div class="col-xs-6">
+            <p>
+              <small>#{{pokemon.id}}</small><br>{{pokemon.ename}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row text-center">
+      <div class="col-xs-4">
+        <small>Attack</small><br>{{pokemon.base['Attack']}}
+      </div>
+      <div class="col-xs-4">
+        <small>Defense</small><br>{{pokemon.base['Defense']}}
+      </div>
+      <div class="col-xs-4">
+        <small>HP</small><br>{{pokemon.base['HP']}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-xs-4">
+        <small>Sp. Attack</small><br>{{pokemon.base['Sp.Atk']}}
+      </div>
+      <div class="col-xs-4">
+        <small>Sp. Defense</small><br>{{pokemon.base['Sp.Def']}}
+      </div>
+      <div class="col-xs-4">
+        <small>Speed</small><br>{{pokemon.base['Speed']}}
+      </div>
+    </div>
+  </section>
+
 </div>

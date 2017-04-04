@@ -8,7 +8,9 @@ import { PokemonListService } from '../pokemon-list.service';
 })
 export class PokemonListComponent implements OnInit {
 
+  // where we'll store all the pokemons at the beginning (cache)
   allPokemons: any = [];
+  // where we'll store the pokemons displayed
   pokemons: any = [];
   pokemonSkills: any = [];
   pokemonTypes: any = [];
@@ -25,7 +27,7 @@ export class PokemonListComponent implements OnInit {
   ]
   selectedSortValue = this.sortValues[0];
   // filter
-
+  selectedFilterType: any;
   // search
   searchValue: string = "";
 
@@ -64,23 +66,27 @@ export class PokemonListComponent implements OnInit {
     );
   };
 
+  // chain requests to be sure we have the Skills & Types data before the Pokemons data
   getAllData() {
     this.loadingData = true;
     this.pokemonListService.getPokemonSkills().subscribe(
       pokemonSkills => {
-        console.log('component pokemonSkills', pokemonSkills, this.loadingData);
+        // console.log('component pokemonSkills', pokemonSkills);
         this.pokemonSkills = pokemonSkills;
 
         this.pokemonListService.getPokemonTypes().subscribe(
           pokemonTypes => {
-            console.log('component pokemonTypes', pokemonTypes, this.loadingData);
+            // console.log('component pokemonTypes', pokemonTypes);
             this.pokemonTypes = pokemonTypes;
 
             this.pokemonListService.getPokemons().subscribe(
               pokemons => {
-                console.log('component pokemons', pokemons, this.loadingData);
+                // console.log('component pokemons', pokemons);
+
+                // add field selected
                 // replace pokemon Chinese Types by English Types (store in pokemon.etype)
                 pokemons.forEach(function(pok) {
+                  pok.selected = false;
                   pok.etype = [];
                   pok.type.forEach(function(ctype) {
                     pokemonTypes.find(function(type) {
@@ -111,17 +117,18 @@ export class PokemonListComponent implements OnInit {
 
     // sorting by id
     if (orderFieldSplit[orderFieldSplit.length-1] == "id") {
-
       // DESC
-      if (orderFieldSplit[0] === '-') {
+      if (orderFieldSplit.length == 2) {
         this.pokemons.sort(function(a, b) {
-          return (parseInt(a[orderFieldSplit[1]]) - parseInt(b[orderFieldSplit[1]]));
+          return parseInt(b.id) - parseInt(a.id);
+          // return (parseInt(b[orderFieldSplit[1]]) - parseInt(a[orderFieldSplit[1]]));
         });
       }
       // ASC
       else {
         this.pokemons.sort(function(a, b) {
-          return (parseInt(b[orderFieldSplit[1]]) - parseInt(a[orderFieldSplit[1]]));
+          return parseInt(a.id) - parseInt(b.id);
+          // return (parseInt(a[orderFieldSplit[0]]) - parseInt(b[orderFieldSplit[0]]));
         });
       }
     }
@@ -129,7 +136,7 @@ export class PokemonListComponent implements OnInit {
     // sorting by ename
     else if (orderFieldSplit[orderFieldSplit.length-1] == "ename") {
       // DESC
-      if (orderFieldSplit[0] === '-') {
+      if (orderFieldSplit.length == 2) {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[1]] < b[orderFieldSplit[1]]) return 1;
           if (a[orderFieldSplit[1]] > b[orderFieldSplit[1]]) return -1;
@@ -149,7 +156,7 @@ export class PokemonListComponent implements OnInit {
     // sorting by etype
     else if (orderFieldSplit[orderFieldSplit.length-1] == "etype") {
       // DESC
-      if (orderFieldSplit[0] === '-') {
+      if (orderFieldSplit.length == 2) {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[1]][0] < b[orderFieldSplit[1]][0]) return 1;
           if (a[orderFieldSplit[1]][0] > b[orderFieldSplit[1]][0]) return -1;
@@ -167,7 +174,9 @@ export class PokemonListComponent implements OnInit {
     }
   };
 
-  searchPokemons(_searchValue) {
+  filterPokemons(_filterType) {
+
+    let _searchValue = this.searchValue;
 
     // init pokemons
     this.pokemons = this.allPokemons;
@@ -175,7 +184,38 @@ export class PokemonListComponent implements OnInit {
     // sort pokemons
     this.sortPokemons();
 
-    // filter pokemons
+    // filter pokemons by _searchValue
+    this.pokemons = this.pokemons.filter(function(pokemon) {
+      return pokemon.ename.toLowerCase().includes(_searchValue.toLowerCase());
+    });
+
+    // filter pokemons by _filterType
+    if (_filterType) {
+      this.pokemons = this.pokemons.filter(function(pokemon) {
+        return (pokemon.etype.indexOf(_filterType.ename) > -1);
+      });
+    }
+
+  };
+
+  searchPokemons(_searchValue) {
+
+    let _selectedFilterType = this.selectedFilterType;
+
+    // init pokemons
+    this.pokemons = this.allPokemons;
+
+    // sort pokemons
+    this.sortPokemons();
+
+    // filter pokemons by _filterType
+    if (this.selectedFilterType) {
+      this.pokemons = this.pokemons.filter(function(pokemon) {
+        return (pokemon.etype.indexOf(_selectedFilterType.ename) > -1);
+      });
+    }
+
+    // filter pokemons by _searchValue
     this.pokemons = this.pokemons.filter(function(pokemon) {
       return pokemon.ename.toLowerCase().includes(_searchValue.toLowerCase());
     });
