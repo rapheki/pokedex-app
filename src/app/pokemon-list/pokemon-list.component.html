@@ -31,7 +31,7 @@
       <h4>Search</h4>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <input type="text" class="form-control" placeholder="Search Name" [(ngModel)]="searchValue" (ngModelChange)="searchPokemons()">
+          <input type="text" class="form-control" placeholder="Search by ename" [(ngModel)]="searchValue" (ngModelChange)="searchPokemons($event)">
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ export class PokemonListComponent implements OnInit {
   // filter
 
   // search
-  searchValue = "";
+  searchValue: string = "";
 
 
   constructor(private pokemonListService: PokemonListService) { }
@@ -106,20 +106,19 @@ export class PokemonListComponent implements OnInit {
 
   sortPokemons() {
 
+    // split sort value
     let orderFieldSplit = this.selectedSortValue.value.split('-');
 
-    console.log("sortpokemons", orderFieldSplit)
-
-    // Sort by id
+    // sorting by id
     if (orderFieldSplit[orderFieldSplit.length-1] == "id") {
 
-      // 'DESC'
+      // DESC
       if (orderFieldSplit[0] === '-') {
         this.pokemons.sort(function(a, b) {
           return (parseInt(a[orderFieldSplit[1]]) - parseInt(b[orderFieldSplit[1]]));
         });
       }
-      // 'ASC'
+      // ASC
       else {
         this.pokemons.sort(function(a, b) {
           return (parseInt(b[orderFieldSplit[1]]) - parseInt(a[orderFieldSplit[1]]));
@@ -127,8 +126,9 @@ export class PokemonListComponent implements OnInit {
       }
     }
 
+    // sorting by ename
     else if (orderFieldSplit[orderFieldSplit.length-1] == "ename") {
-      // 'DESC'
+      // DESC
       if (orderFieldSplit[0] === '-') {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[1]] < b[orderFieldSplit[1]]) return 1;
@@ -136,7 +136,7 @@ export class PokemonListComponent implements OnInit {
           return 0;
         });
       }
-      // 'ASC'
+      // ASC
       else {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[0]] < b[orderFieldSplit[0]]) return -1;
@@ -146,8 +146,9 @@ export class PokemonListComponent implements OnInit {
       }
     }
 
+    // sorting by etype
     else if (orderFieldSplit[orderFieldSplit.length-1] == "etype") {
-      // 'DESC'
+      // DESC
       if (orderFieldSplit[0] === '-') {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[1]][0] < b[orderFieldSplit[1]][0]) return 1;
@@ -155,7 +156,7 @@ export class PokemonListComponent implements OnInit {
           return 0;
         });
       }
-      // 'ASC'
+      // ASC
       else {
         this.pokemons.sort(function(a, b) {
           if (a[orderFieldSplit[0]][0] < b[orderFieldSplit[0]][0]) return -1;
@@ -164,11 +165,20 @@ export class PokemonListComponent implements OnInit {
         });
       }
     }
+  };
 
-    // return array;
-  }
+  searchPokemons(_searchValue) {
 
-  searchPokemons() {
+    // init pokemons
+    this.pokemons = this.allPokemons;
+
+    // sort pokemons
+    this.sortPokemons();
+
+    // filter pokemons
+    this.pokemons = this.pokemons.filter(function(pokemon) {
+      return pokemon.ename.toLowerCase().includes(_searchValue.toLowerCase());
+    });
 
   }
 

@@ -7,14 +7,12 @@ import { AppComponent } from './app.component';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { PokemonListService } from './pokemon-list.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
-import { OrderbyPipe } from './orderby.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonListComponent,
-    PokemonCardComponent,
-    OrderbyPipe
+    PokemonCardComponent
   ],
   imports: [
     BrowserModule,
