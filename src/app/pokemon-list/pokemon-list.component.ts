@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonListService } from '../pokemon-list.service';
 
-import { Observable } from 'rxjs/Observable';
-
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
@@ -10,11 +8,27 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PokemonListComponent implements OnInit {
 
+  allPokemons: any = [];
   pokemons: any = [];
   pokemonSkills: any = [];
   pokemonTypes: any = [];
   loadingData: boolean = false;
   errorMessage: string;
+  // sort
+  sortValues = [
+    {name: "id (ASC)", value: "id"},
+    {name: "id (DESC)", value: "-id"},
+    {name: "ename (ASC)", value: "ename"},
+    {name: "ename (DESC)", value: "-ename"},
+    {name: "type (ASC)", value: "etype"},
+    {name: "type (DESC)", value: "-etype"},
+  ]
+  selectedSortValue = this.sortValues[0];
+  // filter
+
+  // search
+  searchValue = "";
+
 
   constructor(private pokemonListService: PokemonListService) { }
 
@@ -24,7 +38,7 @@ export class PokemonListComponent implements OnInit {
     // this.getPokemonSkills();
     // this.getPokemonTypes();
     this.getAllData();
-  }
+  };
 
   // Retrieve pokemons from the API
   getPokemons() {
@@ -32,7 +46,7 @@ export class PokemonListComponent implements OnInit {
       pokemons => this.pokemons = pokemons,
       error => this.errorMessage = <any>error
     );
-  }
+  };
 
   // Retrieve pokemon skills from the API
   getPokemonSkills() {
@@ -40,7 +54,7 @@ export class PokemonListComponent implements OnInit {
       pokemonSkills => this.pokemonSkills = pokemonSkills,
       error => this.errorMessage = <any>error
     );
-  }
+  };
 
   // Retrieve pokemon types from the API
   getPokemonTypes() {
@@ -48,21 +62,7 @@ export class PokemonListComponent implements OnInit {
       pokemonTypes => this.pokemonTypes = pokemonTypes,
       error => this.errorMessage = <any>error
     );
-  }
-
-  // getAllData() {
-  //   Observable.forkJoin([
-  //     this.pokemonListService.getPokemons(),
-  //     this.pokemonListService.getPokemonSkills(),
-  //     this.pokemonListService.getPokemonTypes()
-  //   ]).subscribe(
-  //     t => {
-  //       this.pokemons = t[0];
-  //       this.pokemonSkills = t[1];
-  //       this.pokemonTypes = t[2];
-  //     }
-  //   );
-  // }
+  };
 
   getAllData() {
     this.loadingData = true;
@@ -91,6 +91,7 @@ export class PokemonListComponent implements OnInit {
                     })
                   });
                 })
+                this.allPokemons = pokemons;
                 this.pokemons = pokemons;
                 this.loadingData = false;
               }
@@ -101,6 +102,75 @@ export class PokemonListComponent implements OnInit {
 
       }
     );
+  };
+
+  sortPokemons() {
+
+    let orderFieldSplit = this.selectedSortValue.value.split('-');
+
+    console.log("sortpokemons", orderFieldSplit)
+
+    // Sort by id
+    if (orderFieldSplit[orderFieldSplit.length-1] == "id") {
+
+      // 'DESC'
+      if (orderFieldSplit[0] === '-') {
+        this.pokemons.sort(function(a, b) {
+          return (parseInt(a[orderFieldSplit[1]]) - parseInt(b[orderFieldSplit[1]]));
+        });
+      }
+      // 'ASC'
+      else {
+        this.pokemons.sort(function(a, b) {
+          return (parseInt(b[orderFieldSplit[1]]) - parseInt(a[orderFieldSplit[1]]));
+        });
+      }
+    }
+
+    else if (orderFieldSplit[orderFieldSplit.length-1] == "ename") {
+      // 'DESC'
+      if (orderFieldSplit[0] === '-') {
+        this.pokemons.sort(function(a, b) {
+          if (a[orderFieldSplit[1]] < b[orderFieldSplit[1]]) return 1;
+          if (a[orderFieldSplit[1]] > b[orderFieldSplit[1]]) return -1;
+          return 0;
+        });
+      }
+      // 'ASC'
+      else {
+        this.pokemons.sort(function(a, b) {
+          if (a[orderFieldSplit[0]] < b[orderFieldSplit[0]]) return -1;
+          if (a[orderFieldSplit[0]] > b[orderFieldSplit[0]]) return 1;
+          return 0;
+        });
+      }
+    }
+
+    else if (orderFieldSplit[orderFieldSplit.length-1] == "etype") {
+      // 'DESC'
+      if (orderFieldSplit[0] === '-') {
+        this.pokemons.sort(function(a, b) {
+          if (a[orderFieldSplit[1]][0] < b[orderFieldSplit[1]][0]) return 1;
+          if (a[orderFieldSplit[1]][0] > b[orderFieldSplit[1]][0]) return -1;
+          return 0;
+        });
+      }
+      // 'ASC'
+      else {
+        this.pokemons.sort(function(a, b) {
+          if (a[orderFieldSplit[0]][0] < b[orderFieldSplit[0]][0]) return -1;
+          if (a[orderFieldSplit[0]][0] > b[orderFieldSplit[0]][0]) return 1;
+          return 0;
+        });
+      }
+    }
+
+    // return array;
   }
+
+  searchPokemons() {
+
+  }
+
 
 }
