@@ -1,0 +1,13 @@
+.image-thm {
+  height: 50px; /* 100x100 */
+}
+
+.type-box {
+  border: 1px solid #e3350d;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  background-color: #f3ae9e;
+}

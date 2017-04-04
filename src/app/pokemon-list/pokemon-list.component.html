@@ -1,4 +1,8 @@
-<table class="table table-bordered table-hover">
+<div *ngIf="loadingData" class="text-center">
+  <i class="fa fa-spinner fa-pulse fa-2x"></i>
+</div>
+
+<table *ngIf="!loadingData" class="table table-bordered table-hover">
 
   <thead>
     <tr>
@@ -11,10 +15,10 @@
 
   <tbody>
     <tr *ngFor="let pokemon of pokemons">
-      <td><img src="/images/thm/{{pokemon.id}}{{pokemon.ename}}.png"></td>
-      <td>{{ pokemon.id }}</td>
-      <td>{{ pokemon.ename }}</td>
-      <td>{{ pokemon.type }}</td>
+      <td><img class="img-responsive image-thm" src="/images/thm/{{pokemon.id}}{{pokemon.flatName ? pokemon.flatName : pokemon.ename}}.png"></td>
+      <td>{{pokemon.id}}</td>
+      <td>{{pokemon.ename}}</td>
+      <td><span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span></td>
     </tr>
   </tbody>
 
