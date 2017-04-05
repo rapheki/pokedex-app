@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="col-md-6 text-center">
-        <span *ngFor="let type of pokemon.etype" class="type-box">{{type}}</span>
+        <span class="type-box" *ngFor="let type of pokemon.etype">{{type}}</span>
       </div>
     </div>
 
@@ -76,6 +76,22 @@
         <small>Speed</small><br>{{pokemon.base['Speed']}}
       </div>
     </div>
+
+    <hr>
+
+    <div class="row text-center">
+      <div class="col-xs-12">
+        Skills Level_up
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="with-skill-box">
+          <span class="skill-box" *ngFor="let skill of pokemon.skills['level_up']">{{getSkill(skill)}}</span>
+        </p>
+      </div>
+    </div>
+
   </section>
 
 </div>
