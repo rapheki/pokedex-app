@@ -1,6 +1,6 @@
 # PokedexApp
 
-Display all the 721 Pokemons in a table. Clicking on a Pokemon gives additional details.
+Display all the 721 Pokemons in a table. Clicking on a Pokemon gives additional details. You can sort by id/ename/type, filter by type, and search by ename. Some skills info in bonus.
 
 
 ## Run the app
@@ -32,17 +32,6 @@ http://localhost:3000/
 ```
 
 
-## Running unit tests (todo)
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-
-## Running end-to-end tests (todo)
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-
 ## Built with
 
 - Angular 4
@@ -54,4 +43,5 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 - The data (pokedex, skills, types) is stored in `server/data`
 - The images (img, spr, thm) are stored in `public/images`
-- The Angular app loads the data on init, and displays it in a table
+- The Angular app loads the data on init, and displays it in cards
+- 3 Components (AppComponent > PokemonListComponent > PokemonCardComponent) & 1 Service (PokemonListService)
